@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App</title>
+</head>
+<body>
+    <h1>Flask App Example</h1>
+    <p>{{ greeting }}</p> <!-- Display greeting passed from Flask -->
+    <p>The sum of 10 and 20 is: {{ total }}</p> <!-- Display total passed from Flask -->
+
+    <!-- Form to call a function dynamically -->
+    <form action="/calculate" method="POST">
+        <label for="num1">Enter number 1:</label>
+        <input type="number" id="num1" name="num1" required>
+        <br>
+        <label for="num2">Enter number 2:</label>
+        <input type="number" id="num2" name="num2" required>
+        <br>
+        <button type="submit">Calculate Sum</button>
+    </form>
+</body>
+</html>
