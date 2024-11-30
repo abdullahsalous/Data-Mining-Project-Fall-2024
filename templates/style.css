@@ -1,0 +1,114 @@
+
+.container {
+    width: 90%;
+    margin: auto;
+    font-family: 'Quattrocento Sans', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: black;
+    font-size: 55px;
+    font-weight: 700;
+}
+/* we added live animation to make the website more apealing*/
+@keyframes circularMove {
+    0% {
+        background-position: 50% 50%;
+    }
+    50% {
+        background-position: 150% 150%;
+    }
+    100% {
+        background-position: 50% 50%;
+    }
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(45, 99, 206, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background-size: 200% 200%;
+    animation: circularMove 2s infinite;
+}
+
+.card {
+    background: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    border-radius: 33px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    margin: 10px 30px 0px;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: 45%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #6E6E6E;
+    font-size: 24px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #9C9C9C;
+    border-radius: 12px;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+output {
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.estimate-button {
+    width: auto;
+    padding: 10px 20px;
+    background: #69BDFF;
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.estimate-button:hover {
+    background: #28B262;
+}
+
+
+#result-card {
+    padding: 20px;
+    text-align: center;
+}
+
+#result {
+    font-size: 32px;
+    color: #595959;
+    font-weight: 400;
+}
