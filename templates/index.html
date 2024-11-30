@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How much is my car Worth?</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -12,10 +12,10 @@
         <div class="card">
             <form action="/predict" method="post">
                 <div class="form-group left">
+                  <!--these are the features that the website asks for and these are the same out model takes in-->
                     <label for="year">Year:</label>
                     <input type="range" id="year" name="year" min="2005" max="2015" value="2010" oninput="this.nextElementSibling.value = this.value">
                     <output>2010</output>
-<!--we added only the features we choose to take in with all the possible values for make, body, transmission-->
                     <label for="make">Make:</label>
                     <select id="make" name="make">
                         <option value="TOYOTA">Toyota</option>
@@ -61,7 +61,7 @@
             </form>
         </div>
         <div class="card" id="result-card">
-            <p id="result">Please enter above values</p>
+            <p id="result">{{ result }}</p> 
         </div>
     </div>
 </body>
