@@ -5,9 +5,12 @@ from scratch_linear_regression import ScratchLinearRegression
 import os
 
 app = Flask(__name__)
-
-model_path = os.path.join('models', 'model.pkl')
-scaler_path = os.path.join('models', 'scaler.pkl')
+#both linear and ridge regression had same metric score
+#polynomial regression performed bad
+#we chose to select ridge regression assuming it offers slight advantages in 
+#senarios with high collinear features whne regularization is needed to prevent overfitting
+model_path = os.path.join('models', 'ridgeModel.pkl')
+scaler_path = os.path.join('models', 'ridgeScaler.pkl')
 
 with open(model_path, 'rb') as model_file:
     model = pickle.load(model_file)
@@ -25,7 +28,7 @@ with open('body_dict.pkl', 'rb') as file:
     body_dict = pickle.load(file)
 with open('transmission_dict.pkl', 'rb') as file:
     transmission_dict = pickle.load(file)
-
+#we loaded all the dictionarys that have the car makes, model, trim, transmission, body
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -56,13 +59,18 @@ def predict():
 
         print(f"Encoded Values -> Make: {make_encoded}, Model: {model_encoded}, Trim: {trim_encoded}, Body: {body_encoded}, Transmission: {transmission_encoded}")
 
-        # Check for any None values indicating invalid inputs
+        #we we are given any name other than thats in the dictionary we ask you to input the credentials again
         if None in [make_encoded, model_encoded, trim_encoded, body_encoded, transmission_encoded]:
             available_makes = ', '.join(make.capitalize() for make in make_dict.keys())
             available_trims = ', '.join(trim.upper() for trim in trim_dict.keys())
-            return render_template('index.html', result=f"Error: Invalid car details. Available makes: {available_makes}, Avaible trims: {available_trims}")
+            formatted_result = f"""
+            Error: Invalid car details.<br>
+            <span style='font-size:10px;line-height:4px;'>Available makes: {available_makes}</span>,<br><br>
+            <span style='color:blue; font-size:10px;line-height:4px;'>Available trims: {available_trims}</span>
+            """
+            return render_template('index.html', result=formatted_result)
 
-        # Prepare the input features for the model
+        # giving the inputted features to the model
         features = np.array([[year, make_encoded, model_encoded, trim_encoded, body_encoded, transmission_encoded, condition, odometer, mmr]])
         features_scaled = scaler.transform(features)
 
@@ -71,7 +79,7 @@ def predict():
         # Predict using the model
         predicted_price = model.predict(features_scaled)[0]
 
-        # Return the result to the HTML template
+        # what ever the result is will be shown on the bottom card
         return render_template('index.html', result=f"Predicted Selling Price: ${predicted_price:.2f}")
     except Exception as e:
         print(f"Error: {str(e)}")
