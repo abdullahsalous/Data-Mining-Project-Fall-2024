@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How much is my car Worth?</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -12,17 +12,13 @@
         <div class="card">
             <form action="/predict" method="post">
                 <div class="form-group left">
+                    <!-- these are the features that the website asks for and these are the same our model takes in -->
                     <label for="year">Year:</label>
                     <input type="range" id="year" name="year" min="2005" max="2015" value="2010" oninput="this.nextElementSibling.value = this.value">
                     <output>2010</output>
-<!--we added only the features we choose to take in with all the possible values for make, body, transmission-->
+
                     <label for="make">Make:</label>
                     <select id="make" name="make">
-                        <option value="TOYOTA">Toyota</option>
-                        <option value="HONDA">Honda</option>
-                        <option value="FORD">Ford</option>
-                        <option value="CHEVROLET">Chevrolet</option>
-                        <option value="NISSAN">Nissan</option>
                     </select>
 
                     <label for="model">Model:</label>
@@ -61,8 +57,30 @@
             </form>
         </div>
         <div class="card" id="result-card">
-            <p id="result">Please enter above values</p>
+            <p id="result">{{ result|safe }}</p> 
         </div>
     </div>
+
+    <!-- these are all the makes that our model can predict-->
+    <script>
+        const makes = [
+            "Toyota", "Honda", "Ford", "Chevrolet", "Nissan", "Kia", "BMW", "Volvo", 
+            "Audi", "Cadillac", "Acura", "Lexus", "Hyundai", "Buick", "Infiniti", 
+            "Jeep", "Mercedes-Benz", "Mitsubishi", "Mazda", "Mini", "Land Rover", 
+            "Lincoln", "Jaguar", "Volkswagen", "Subaru", "Scion", "Porsche", 
+            "Dodge", "Fiat", "Chrysler", "Ferrari", "GMC", "Ram", "Smart", 
+            "Bentley", "Pontiac", "Saturn", "Maserati", "Mercury", "Hummer", 
+            "Saab", "Suzuki", "Oldsmobile", "Rolls-Royce", "Isuzu", "Plymouth", 
+            "Tesla", "Aston Martin", "Geo", "Fisker", "Daewoo", "Lamborghini", "Lotus"
+        ];
+
+        const makeSelect = document.getElementById('make');
+        makes.forEach(make => {
+            const option = document.createElement('option');
+            option.value = make.toUpperCase();
+            option.textContent = make;
+            makeSelect.appendChild(option);
+        });
+    </script>
 </body>
 </html>
